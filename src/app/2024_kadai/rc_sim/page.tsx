@@ -6,6 +6,9 @@ import { LineChart} from "@mui/x-charts/LineChart"
 import { InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 
+import circuit_image from "./circuit.png"
+import Image from "next/image";
+
 
 const default_resistance = 1000;
 const default_capacitance = 0.001;
@@ -222,6 +225,10 @@ export default function RC_sim()
                         </Box>
                     </Box>
                     {/*END : 数式*/}
+                    <Box sx={b_sx}>
+                        <Typography variant="h5">Circuit</Typography>
+                        <Image  src={circuit_image} alt="circuit image" width={350}/>
+                    </Box>
                 </Box>
             </Paper>
         </Box>
