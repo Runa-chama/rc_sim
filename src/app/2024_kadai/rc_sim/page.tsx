@@ -50,18 +50,19 @@ export default function RC_sim()
         let step : number = 0;
         const between = Math.ceil(number_of_data / max_points); 
         let v_cache = 0;
-        for(let now : number = interval; now < time+interval; now += interval)
+        for(let now : number = interval; now <= time+interval; now=Number((now+interval).toFixed(5)))
         {
             const v : number = v_cache;
-            const approximate = v + (voltage - v) * (capacitance * resistance) * interval;   //近似式での計算
-            const exact = voltage * (1 - Math.exp(-1.0 * now * capacitance * resistance));
+            const approximate : number = v + ((voltage - v)  * interval )/ (capacitance * resistance);   //近似式での計算
+            const exact = voltage * (1 - Math.exp(-1.0 * now / (capacitance * resistance)));
             
-            if(step % between == 0)
+            if(step % between == 0 || now+interval > time)
             {
                 data1_buf.push(approximate);
                 data2_buf.push(exact);
                 x_axis_buf.push(Number(now.toFixed(5)));
             }
+
             v_cache = approximate;
             step++;
         }
@@ -102,7 +103,7 @@ export default function RC_sim()
                         <Typography sx={{transform:"rotate(-90deg)",textAlign:"center",textWrap:"nowrap",fontSize:18}}>v(t) : Voltage (V)</Typography>
                     </Box>
                     <LineChart
-                        xAxis={[{ data: x_axis ,label:"t : Time (s)",labelFontSize:18,tickFontSize:16}]}
+                        xAxis={[{ data: x_axis ,label:"t : Time (s)",labelFontSize:18,tickFontSize:16,max:time}]}
                         yAxis={[{tickFontSize:16}]}
                         series={[
                             {
