@@ -73,6 +73,7 @@ export default function RC_sim()
     }
 
     useEffect(() => {
+        document.title = "RC Simulator - s22114";
         set_resistance(default_resistance);
         set_capacitance(default_capacitance);
         set_voltage(default_voltage);
